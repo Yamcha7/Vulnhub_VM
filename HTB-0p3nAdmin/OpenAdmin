@@ -1,0 +1,74 @@
+The name of Machine is OPenAdmin
+
+Given ip is 10.10.10.171  
+
+The ports that we got after nmap scan is 22 and 80 
+
+We first start with port 80 .
+
+Doing dirsearch on port 80, 
+
+
+We get a folder /music . 
+
+Lets see whats in it and lets try to enumerate beyond music 
+
+We find /music/img and /music/css
+
+
+We are able to get the folder ona which is open net admin 
+
+From there , i get the archive.tar.gz and we extract it 
+
+
+We get a list of files and one of them is a config file to the db 
+
+db-login = ona_sys
+db_passwd = n1nj4W4rri0R!
+db database = ona-default 
+
+
+Tried the credentials on jimmy and joanna in ssh 
+
+Jimmy worked !!!!!!!!!!!!!!
+
+We are inside jimmy 
+
+Now after a peek , 
+
+We enumerate to the internal page inside the /var/www and find a important main page 
+giving us access to the private key of ssh of joanna
+
+So we tried curl on localhost 
+
+However no page was found 
+
+Then netstat -tulpn was done , to find the ports listening .
+
+Trying a port among one of those , gave the id_rsa
+
+GEtting the id_rsa , getting its hash and giving it to john .
+
+We get the password bloodninjas
+
+Now we try logging in joanna , but it doesnt work
+
+as we need the rsa key too
+
+ssh -i id_rsa user@ip
+
+in joanna , 
+
+we get user.txt
+
+Now we see /bin/nano /opt/priv 
+
+We can include any file in the nano 
+
+So we edited the /etc/passwd file and added a new user .
+
+* does not work as empty passwd 
+
+WVLY0mgH0RtUI this is a hash for mrcake password 
+
+and we got root 
