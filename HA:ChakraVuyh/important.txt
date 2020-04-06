@@ -1,0 +1,38 @@
+Using nmap , 
+got port 22 and port 80 and port 65530
+
+The port 65530 is an anonymous ftp and we get a arjun.7z 
+
+We used 7z2john and cracked the password 
+
+The password is family 
+
+We extract a secret.txt and the text is in base64 
+
+cat secret.txt | base64 -d 
+
+gila:admin@gmail.com:princesa
+
+
+gila is an indication for gila cms
+
+We found /gila 
+
+
+and we logged using the credentials 
+
+and we also found a gila lfi 
+
+We replaced the index.php with php reverse shell code and we get a reverse shell
+
+Now once inside , we found the docker to be working 
+
+we ran 
+
+docker ps -a
+docker start wizardly_lovelace
+docker exec -it wizardly_lovelace /bin/sh
+
+cd mnt
+
+and we found the final flag.
