@@ -1,0 +1,42 @@
+On netdiscover we got the ip 
+
+The ip gives us ports 
+
+port 22
+port 8080 
+
+
+enumerating the directories we got some sensitive directories 
+
+/axis2/axis2-web/index.jsp
+
+The login we got at http://192.168.0.8:8080/axis2/axis2-admin/welcome?failed=true 
+
+axis service 
+
+tried using default credentials 
+
+The username is admin and the password is axis2
+
+We get access to one service .
+
+Another service lied at the manager/html where default credentials tomcat and tomcat worked 
+
+We uploaded a jsp reverse shell from metasploit and got the user tomcat 
+
+
+However we checked sudo and found tomcat to have no passwd sudo for java execution 
+
+
+We created another reverse shell for java in jar 
+
+Downloaded in the victim using wget and ran it from the sudo java
+
+
+To get root at the other end 
+
+Best of Luck
+628435356e49f976bab2c04948d22fe4
+
+
+
